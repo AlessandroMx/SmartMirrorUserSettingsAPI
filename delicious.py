@@ -7,6 +7,7 @@ web service build with CherryPy.
 Author: Alessandro Chávez
 """
 
+import apple
 import cherrypy
 import cherrypy_cors
 import json
@@ -45,6 +46,9 @@ class WebPageWebService(object):
         json
             Results from the database in JSON format
         """
+        apple_obj = apple.Apple(data_json)
+        from IPython import embed
+        embed(header='Inside of the POST method.')
         return None
 
 

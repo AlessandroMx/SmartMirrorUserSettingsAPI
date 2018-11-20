@@ -55,13 +55,14 @@ class Apple():
         """Handle the received json to return whatever the other application
         asks for.
         """
-
+        data = json.loads(self.json)
+        if data['operation'] == 'create_mirror_profile':
+            self.create_mirror_profile()
 
     def create_mirror_profile(self):
         """Insert record in the database
         """
-        pass        
-
+        pass
 
 
 if __name__ == "__main__":
