@@ -11,42 +11,40 @@ import cherrypy
 import cherrypy_cors
 import json
 
+
 @cherrypy.expose
 class WebPageWebService(object):
 
     @cherrypy.tools.accept(media='text/plain')
     def GET(self):
-        'Servicio GET por si se requiere...'
+        """Simple GET method for any future implementation
+
+        Returns
+        -------
+        str
+            Just a 'data' string that test that the GET method is working fine
+        """
+
         return str('data')
 
     @cherrypy.expose
     def POST(self, data_json):
         """POST operation that enables the interaction with the MySQL database
         through a JSON file
-        
-        Arguments:
-            data_json {json} -- Arguments specifying the type of operation to
+
+        Parameters
+        ----------
+        data_json : json
+            Arguments specifying the type of operation to
             apply in the MySQL database (it could be any kind of CRUD 
             operation). In must cases it also needs to have more arguments to
             be able to query some specific things in the database.
-        
-        Returns:
-            json -- Results from the database in JSON format
-        """
 
-        # 
-        # data = json.loads(data_json)
-        # fingers = dp.Fingers()
-        # operations = {
-        #     'get_tables': fingers.get_tables
-        # }
-        # try:
-        #     func = operations.get(data['operation'], lambda: {
-        #                       'res': 'Error durante operación'})
-        # except KeyError:
-        #     return json.dumps({'res': 'Operación inválida.'})
-        # response = {'res': func()}
-        # return json.dumps(response, ensure_ascii=False)
+        Returns
+        -------
+        json
+            Results from the database in JSON format
+        """
         return None
 
 
@@ -58,7 +56,7 @@ if __name__ == '__main__':
             'cors.expose.on': True,
             'tools.response_headers.on': True,
             'tools.response_headers.headers': [
-                ('Content-Type', 'text/plain'), 
+                ('Content-Type', 'text/plain'),
                 ('Access-Control-Allow-Origin', '*')
             ]
         }
