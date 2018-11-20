@@ -62,6 +62,11 @@ class Apple():
     def create_mirror_profile(self):
         """Insert record in the database
         """
+        query = f"""
+        INSERT INTO smartmirror ()
+        VALUES ()
+        """
+        self.cursor.execute("")
         pass
 
 
