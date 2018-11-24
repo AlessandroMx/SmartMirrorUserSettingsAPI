@@ -11,7 +11,7 @@
         var test_json = { 
             'operation': 'create_mirror_profile', 
             'operation_args': { 
-                'id': '1234567899', 
+                'id': '0123456789', 
                 'password': 'password', 
                 'mail': 'other@coldmail.com', 
                 'mail_password': 'password', 
@@ -20,15 +20,28 @@
                 'weather_city': 'Queretaro' 
             } 
         };
+        var test_json2 = { 
+            'operation': 'delete_user', 
+            'operation_args': { 
+                'id': '9876543210'
+            } 
+        };
+        var test_json3 = { 
+            'operation': 'update_user', 
+            'operation_args': { 
+                'id': '0123456789',
+                'password': 'test'
+            } 
+        };
         $(document).ready(() => {
             $("#button").click(() => {
-                var json = JSON.stringify(test_json);
+                var json = JSON.stringify(test_json3);
                 $.post("http://127.0.0.1:8086/", {
                     "data_json": json
                 }).done(function (string) {
-                    let arr = JSON.parse(string);
+                    let response = JSON.parse(string);
                     console.log('Entra al done...');
-                    console.log(arr);
+                    console.log(response);
                 });
             });
         });

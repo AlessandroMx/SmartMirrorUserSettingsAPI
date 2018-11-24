@@ -47,10 +47,11 @@ class WebPageWebService(object):
             Results from the database in JSON format
         """
         apple_obj = apple.Apple(data_json)
-        apple_obj.manage_operations()
-        # from IPython import embed
-        # embed(header='Inside of the POST method.')
-        response = {'response': 'successful'}
+        try:
+            response = apple_obj.manage_operations()
+        except Exception as catched_exception:
+            response = str(catched_exception)
+        response = {'response': response}
         return json.dumps(response, ensure_ascii=False)
 
 
@@ -68,7 +69,6 @@ if __name__ == '__main__':
         }
     }
     cherrypy.config.update({'server.socket_host': '127.0.0.1'})
-    # cherrypy.config.update({'server.socket_host': '192.168.43.180'})
     cherrypy.config.update({'server.socket_port': 8086})
     cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
     cherrypy.quickstart(WebPageWebService(), '/', conf)
