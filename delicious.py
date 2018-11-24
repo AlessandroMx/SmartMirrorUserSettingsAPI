@@ -47,9 +47,11 @@ class WebPageWebService(object):
             Results from the database in JSON format
         """
         apple_obj = apple.Apple(data_json)
-        from IPython import embed
-        embed(header='Inside of the POST method.')
-        return None
+        apple_obj.manage_operations()
+        # from IPython import embed
+        # embed(header='Inside of the POST method.')
+        response = {'response': 'successful'}
+        return json.dumps(response, ensure_ascii=False)
 
 
 if __name__ == '__main__':

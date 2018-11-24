@@ -8,9 +8,21 @@
     <title>Prueba JSON</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+        var test_json = { 
+            'operation': 'create_mirror_profile', 
+            'operation_args': { 
+                'id': '1234567899', 
+                'password': 'password', 
+                'mail': 'other@coldmail.com', 
+                'mail_password': 'password', 
+                'news_country': 'Mexico', 
+                'weather_country': 'Mexico', 
+                'weather_city': 'Queretaro' 
+            } 
+        };
         $(document).ready(() => {
             $("#button").click(() => {
-                var json = JSON.stringify({ 'operation': 'get_tables', 'b': 2 });
+                var json = JSON.stringify(test_json);
                 $.post("http://127.0.0.1:8086/", {
                     "data_json": json
                 }).done(function (string) {

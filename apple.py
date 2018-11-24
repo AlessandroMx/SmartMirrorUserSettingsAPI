@@ -56,18 +56,54 @@ class Apple():
         asks for.
         """
         data = json.loads(self.json)
-        if data['operation'] == 'create_mirror_profile':
-            self.create_mirror_profile()
+
+        operations = {
+            'create_mirror_profile': self.create_mirror_profile
+        }
+
+        self.operation = data['operation']
+        self.operation_args = data['operation_args']
+
+        if self.operation in operations.keys():
+            operations[self.operation]()
+        else:
+            raise Exception(f'Invalid operation: {self.operation} ' +
+                            'function does not exist.')
 
     def create_mirror_profile(self):
         """Insert record in the database
         """
-        query = f"""
-        INSERT INTO smartmirror ()
-        VALUES ()
-        """
-        self.cursor.execute("")
-        pass
+        keys = ['id', 'mail', 'mail_password', 'news_country',
+                'password', 'weather_city', 'weather_country']
+        if all(k in keys for k in self.operation_args.keys()):
+            query = f"""
+            INSERT INTO smartmirror (
+                id, 
+                mail, 
+                mail_password, 
+                news_country, 
+                password, 
+                weather_city, 
+                weather_country
+            )
+            VALUES (
+                '{self.operation_args['id']}', 
+                '{self.operation_args['mail']}', 
+                '{self.operation_args['mail_password']}', 
+                '{self.operation_args['news_country']}', 
+                '{self.operation_args['password']}', 
+                '{self.operation_args['weather_city']}', 
+                '{self.operation_args['weather_country']}'
+            )
+            """
+            try:
+                self.cursor.execute(query)
+                self.connection.commit()
+            except mysql.connector.errors.IntegrityError:
+                raise Exception('The provided ID is already being used.')
+        else:
+            raise Exception('Some arguments are missing. Please check the ' +
+                            'json request')
 
 
 if __name__ == "__main__":
