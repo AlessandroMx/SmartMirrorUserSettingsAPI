@@ -60,7 +60,8 @@ class Apple():
         operations = {
             'create_mirror_profile': self.create_mirror_profile,
             'delete_user': self.delete_user,
-            'update_user': self.update_user
+            'update_user': self.update_user,
+            'auth_user': self.auth_user
         }
 
         self.operation = data['operation']
@@ -155,6 +156,31 @@ class Apple():
         else:
             raise Exception('Id in request is missing. Please check the ' +
                             'json request')
+
+    def auth_user(self):
+        """Verifies if an user exist in our database
+        """
+        keys = ['id', 'password']
+        if all(k in keys for k in self.operation_args.keys()):
+            query = f"""
+            SELECT * 
+            FROM smartmirror
+            WHERE id = '{self.operation_args['id']}'
+            AND password = '{self.operation_args['password']}'
+            """
+            try:
+                self.cursor.execute(query)
+                users = self.cursor.fetchall()
+                if len(users) >= 1:
+                    return 'True'
+                else:
+                    return 'False'
+            except mysql.connector.errors.IntegrityError:
+                raise Exception('There was no user found in our database.')
+        else:
+            raise Exception('Some arguments are missing. Please check the ' +
+                            'json request')
+
 
 
 if __name__ == "__main__":

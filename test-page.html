@@ -33,9 +33,16 @@
                 'password': 'test'
             } 
         };
+        var test_json4 = { 
+            'operation': 'auth_user', 
+            'operation_args': { 
+                'id': '9876543210',
+                'password': 'password'
+            } 
+        };
         $(document).ready(() => {
             $("#button").click(() => {
-                var json = JSON.stringify(test_json3);
+                var json = JSON.stringify(test_json4);
                 $.post("http://127.0.0.1:8086/", {
                     "data_json": json
                 }).done(function (string) {
