@@ -12,24 +12,27 @@ import cherrypy
 import cherrypy_cors
 import json
 
+from IPython import embed
 
 @cherrypy.expose
 class WebPageWebService(object):
 
-    @cherrypy.tools.accept(media='text/plain')
-    def GET(self):
-        """Simple GET method for any future implementation
+    # @cherrypy.tools.accept(media='text/plain')
+    # def GET(self):
+    #     """Simple GET method for any future implementation
 
-        Returns
-        -------
-        str
-            Just a 'data' string that test that the GET method is working fine
-        """
+    #     Returns
+    #     -------
+    #     str
+    #         Just a 'data' string that test that the GET method is working fine
+    #     """
 
-        return str('data')
+    #     return str('data')
 
     @cherrypy.expose
-    def POST(self, data_json):
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()
+    def POST(self, arg):
         """POST operation that enables the interaction with the MySQL database
         through a JSON file
 
@@ -46,13 +49,14 @@ class WebPageWebService(object):
         json
             Results from the database in JSON format
         """
+        data_json = cherrypy.request.json
         apple_obj = apple.Apple(data_json)
         try:
             response = apple_obj.manage_operations()
         except Exception as catched_exception:
             response = str(catched_exception)
         response = {'response': response}
-        return json.dumps(response, ensure_ascii=False)
+        return response
 
 
 if __name__ == '__main__':

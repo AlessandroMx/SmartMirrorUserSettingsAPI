@@ -13,6 +13,7 @@ CREATE TABLE `SmartMirror` (
   `password` varchar(20) NOT NULL,
   `name` varchar(50),
   `last_name` varchar(50),
+  `description` text,
   `gender` varchar(1),
   `twitter` varchar(50),
   `twitter_password` varchar(50),
@@ -25,5 +26,5 @@ CREATE TABLE `SmartMirror` (
 );
 
 -- Insertar registro de usuario
-INSERT INTO SmartMirror (id, password, name, last_name, gender, mail, mail_password, news_country, weather_country, weather_city)
-VALUES ('9876543210', 'password', 'John', 'Doe', 'M', 'john@coldmail.com', 'mail_password', 'Mexico', 'Mexico', 'Queretaro');
+INSERT INTO SmartMirror (id, password, name, last_name, description, gender, mail, mail_password, news_country, weather_country, weather_city)
+VALUES ('9876543210', 'password', 'John', 'Doe', 'Esta es una breve descripción acerca de mí...', 'M', 'john@coldmail.com', 'mail_password', 'Mexico', 'Mexico', 'Queretaro');

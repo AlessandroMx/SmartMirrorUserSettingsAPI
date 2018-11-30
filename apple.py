@@ -3,6 +3,7 @@ necessary to obtain and set data in the Smart Mirror User Settings database.
 """
 
 from dotenv import load_dotenv
+from IPython import embed
 from os.path import join, dirname
 import json
 import mysql.connector
@@ -55,7 +56,7 @@ class Apple():
         """Handle the received json to return whatever the other application
         asks for.
         """
-        data = json.loads(self.json)
+        data = self.json
 
         operations = {
             'create_mirror_profile': self.create_mirror_profile,
@@ -172,9 +173,21 @@ class Apple():
                 self.cursor.execute(query)
                 users = self.cursor.fetchall()
                 if len(users) >= 1:
-                    return 'True'
+                    user_info = {
+                        'id': users[0][0],
+                        'name': users[0][2],
+                        'lastName': users[0][3],
+                        'description': users[0][4],
+                        'gender': users[0][5],
+                        'twitter': users[0][6],
+                        'mail': users[0][8],
+                        'newsCountry': users[0][10],
+                        'weatherCountry': users[0][11],
+                        'weatherCity': users[0][12]
+                    }
+                    return user_info
                 else:
-                    return 'False'
+                    return False
             except mysql.connector.errors.IntegrityError:
                 raise Exception('There was no user found in our database.')
         else:
